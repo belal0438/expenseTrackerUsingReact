@@ -7,7 +7,7 @@ const HandlingUrlData = async (url, data) => {
     const result = await axios.post(url, data);
     // console.log("result", result);
     if (result.status === 200) {
-      alert("Account Craeted successfully");
+      alert("successfully");
       return result.data;
     } else {
       throw new Error("Authencation failed");
@@ -39,12 +39,17 @@ const Users = () => {
     // console.log(obj);
     let url;
     if (isLogin) {
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBBwPK-3FcqO64_z8KE_TOY-luwAxohwB4";
     } else {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBBwPK-3FcqO64_z8KE_TOY-luwAxohwB4";
-
-      await HandlingUrlData(url, { ...obj, returnSecureToken: true });
     }
+    const result = await HandlingUrlData(url, {
+      ...obj,
+      returnSecureToken: true,
+    });
+    console.log("data", result);
   };
 
   return (
@@ -76,6 +81,7 @@ const Users = () => {
           required
         />
         <button type="submit">{isLogin ? "Login" : "creat Account"}</button>
+        {isLogin && <a href="/user.js">Forget password</a>}
       </form>
       <button
         type="submit"
