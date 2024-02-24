@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./naveBar.css";
+import AuthContext from "../../../store/auth-context";
 
 const NaveBar = (props) => {
+  const AuthCtxt = useContext(AuthContext);
+
+  const logoutOnClickHanlder = () => {
+    AuthCtxt.logout();
+  };
+
   return (
     <header>
       <ul>
@@ -15,6 +22,11 @@ const NaveBar = (props) => {
               Complete now
             </button>
           </div>
+        </li>
+        <li>
+          <button className="LogOut" onClick={logoutOnClickHanlder}>
+            Logout
+          </button>
         </li>
       </ul>
       <div className="linDiv"></div>
