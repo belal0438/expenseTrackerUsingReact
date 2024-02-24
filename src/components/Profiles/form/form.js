@@ -12,7 +12,26 @@ const HandleUserDetailFormAPi = async (data) => {
 
     console.log("resultUserDetail", result);
   } catch (error) {
+    alert(error.message);
     console.log("errorOnUserDetail", error);
+  }
+};
+
+const sendVerifyEmailHandler = async (idToken) => {
+  try {
+    const result = await axios.post(
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBBwPK-3FcqO64_z8KE_TOY-luwAxohwB4",
+      { requestType: "VERIFY_EMAIL", idToken }
+    );
+    // console.log("sendEmailresult", result);
+    if (result.status === 200) {
+      alert("Send Verification Email");
+    } else {
+      throw new Error("Somthing went wrong while sending email");
+    }
+  } catch (error) {
+    alert(error.message);
+    console.log("errorWhileSendingVerifyEmail", error);
   }
 };
 
@@ -45,6 +64,10 @@ const Form = () => {
     fecthUserData();
   }, [idToken]);
 
+  const veryifyEmailHanlder = () => {
+    sendVerifyEmailHandler(idToken);
+  };
+
   return (
     <>
       <form className="DetailForm" onSubmit={userDetailFormSubmitHandler}>
@@ -67,6 +90,10 @@ const Form = () => {
           </li>
         </ul>
         <button className="UpdateBtn">Update</button>
+        <button className="verifyEmail" onClick={veryifyEmailHanlder}>
+          {" "}
+          very email
+        </button>
       </form>
     </>
   );
