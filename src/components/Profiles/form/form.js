@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useEffect } from "react";
 import "./form.css";
 import AuthContext from "../../../store/auth-context";
 import axios from "axios";
@@ -31,6 +31,19 @@ const Form = () => {
     // console.log("objValue", obj);
     await HandleUserDetailFormAPi({ idToken, ...obj });
   };
+
+  useEffect(() => {
+    const fecthUserData = async () => {
+      const response = await axios.post(
+        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBBwPK-3FcqO64_z8KE_TOY-luwAxohwB4",
+        { idToken }
+      );
+      //   console.log("response", response.data.users);
+      inputNameRef.current.value = `${response.data.users[0].displayName}`;
+      inputImageUrlRef.current.value = `${response.data.users[0].photoUrl}`;
+    };
+    fecthUserData();
+  }, [idToken]);
 
   return (
     <>
