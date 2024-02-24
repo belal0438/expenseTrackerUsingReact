@@ -63,42 +63,49 @@ const Users = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={formSubmitHandler}>
-        <h2>{isLogin ? "Login" : "Sign Up"}</h2>
-        <input
-          type="email"
-          name="email"
-          placeholder="email"
-          autoComplete="new-email"
-          ref={inputEmailRef}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          autoComplete="new-password"
-          ref={inputPasswordRef}
-          required
-        />
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="confirmPassword"
-          autoComplete="new-password"
-          ref={inputConfirmPassRef}
-          required
-        />
-        <button type="submit">{isLogin ? "Login" : "creat Account"}</button>
-        {isLogin && <a href="/user.js">Forget password</a>}
-      </form>
-      <button
-        type="submit"
-        className="signupLoginBtn"
-        onClick={switchAccountSignUpLogin}>
-        {isLogin ? "creat an account: Sign Up" : "Have an account: Login"}
-      </button>
+    <div className="Container">
+      <div className="userDivContainer">
+        <form className="userForm" onSubmit={formSubmitHandler}>
+          <h2>{isLogin ? "Login" : "Sign Up"}</h2>
+          <input
+            type="email"
+            name="email"
+            className="inputvalue"
+            placeholder="email"
+            autoComplete="new-email"
+            ref={inputEmailRef}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            className="inputvalue"
+            placeholder="password"
+            autoComplete="new-password"
+            ref={inputPasswordRef}
+            required
+          />
+          <input
+            type="password"
+            name="confirmPassword"
+            className="inputvalue"
+            placeholder="confirmPassword"
+            autoComplete="new-password"
+            ref={inputConfirmPassRef}
+            required
+          />
+          <button type="submit" className="SubmitBtn">
+            {isLogin ? "Login" : "creat Account"}
+          </button>
+          {isLogin && <a href="/user.js">Forget password</a>}
+        </form>
+        <button
+          type="submit"
+          className="signupLoginBtn"
+          onClick={switchAccountSignUpLogin}>
+          {isLogin ? "creat an account: Sign Up" : "Have an account: Login"}
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,22 @@
+.DetailForm {
+  margin: auto;
+  /* border: 2px solid red; */
+  text-align: start;
+  width: 60%;
+}
+
+.UpdateBtn {
+  margin: 8px;
+  padding: 3px;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 3px;
+  background-color: rgb(163, 48, 48);
+}
+
+.CnacelBtn {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(163, 48, 48);
+  border-radius: 3px;
+  color: rgb(163, 48, 48);
+}

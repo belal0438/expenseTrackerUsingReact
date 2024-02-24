@@ -1,4 +1,4 @@
-body {
+.Container {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -9,13 +9,13 @@ body {
   background-color: #f4f4f4;
 }
 
-div {
+.userDivContainer {
   background-color: lightblue;
   padding: 10px;
   border-radius: 4px;
 }
 
-form {
+.userForm {
   background-color: #fff;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -23,7 +23,7 @@ form {
   text-align: center;
 }
 
-input {
+.inputvalue {
   width: 100%;
   padding: 10px;
   margin-bottom: 16px;
@@ -32,7 +32,7 @@ input {
   border-radius: 4px;
 }
 
-button {
+.SubmitBtn {
   width: 100%;
   background-color: #4caf50;
   color: #fff;
@@ -43,9 +43,15 @@ button {
 }
 
 .signupLoginBtn {
+  width: 100%;
+  background-color: #4caf50;
+  color: #fff;
   margin-top: 12px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
 }
 
-button:hover {
+.SubmitBtn:hover {
   background-color: #45a049;
 }

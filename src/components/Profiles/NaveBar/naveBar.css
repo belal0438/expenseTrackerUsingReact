@@ -1,0 +1,55 @@
+ul {
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li {
+  list-style: none;
+  width: 50%;
+}
+
+.ComplNow {
+  border: none;
+  color: rgb(67, 67, 250);
+  background-color: rgb(230, 209, 250);
+  font-size: 12px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.leftDiv {
+  background-color: rgb(230, 209, 250);
+  width: 50%;
+  height: fit-content;
+  font-size: 12px;
+  border-radius: 3px;
+}
+
+.linDiv {
+  width: 100%;
+  height: 1px;
+  background-color: rgb(30, 29, 29);
+}
+
+@media screen and (max-width: 767px) {
+  /* Styles for small screens */
+  header {
+    width: 100%;
+  }
+  ul {
+    margin: 5px 0;
+    display: grid;
+  }
+  li {
+    width: fit-content;
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  /* Styles for medium screens */
+}
