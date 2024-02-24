@@ -1,17 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import axios from "axios";
 import "./users.css";
-
+import AuthContext from "../../store/auth-context";
 const HandlingUrlData = async (url, data) => {
   try {
     const result = await axios.post(url, data);
     // console.log("result", result);
     if (result.status === 200) {
-      alert("successfully");
-      return result.data;
-    } else {
-      throw new Error("Authencation failed");
+      return result;
     }
+    return null;
   } catch (error) {
     // console.log("error", error);
     alert(error.message);
@@ -24,6 +22,7 @@ const Users = () => {
   const inputEmailRef = useRef();
   const inputPasswordRef = useRef();
   const inputConfirmPassRef = useRef();
+  const AuthCtxt = useContext(AuthContext);
 
   const switchAccountSignUpLogin = () => {
     setIsLogin((prevState) => !prevState);
@@ -41,15 +40,26 @@ const Users = () => {
     if (isLogin) {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBBwPK-3FcqO64_z8KE_TOY-luwAxohwB4";
+      const result = await HandlingUrlData(url, {
+        ...obj,
+        returnSecureToken: true,
+      });
+      if (result) {
+        alert("User logged successfuly");
+        // console.log("data", result.data.idToken);
+        AuthCtxt.loggin(result.data.idToken);
+      }
     } else {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBBwPK-3FcqO64_z8KE_TOY-luwAxohwB4";
+      const result = await HandlingUrlData(url, {
+        ...obj,
+        returnSecureToken: true,
+      });
+      if (result) {
+        alert("Account created successfuly");
+      }
     }
-    const result = await HandlingUrlData(url, {
-      ...obj,
-      returnSecureToken: true,
-    });
-    console.log("data", result);
   };
 
   return (
