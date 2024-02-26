@@ -32,6 +32,16 @@
   border-radius: 4px;
 }
 
+.forgetPass {
+  border: none;
+  color: rgb(134, 134, 247);
+  margin-top: 6px;
+}
+
+.forgetPassSpan {
+  margin: 0 2px 8px 2px;
+}
+
 .SubmitBtn {
   width: 100%;
   background-color: #4caf50;
