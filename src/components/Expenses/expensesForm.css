@@ -1,0 +1,53 @@
+.expenseContainer {
+  margin: auto;
+  padding-top: 1rem;
+  /* border: 2px solid red; */
+  width: 50%;
+}
+
+.expensesFrom {
+  margin: auto;
+  /* border: 2px solid green; */
+  width: 90%;
+}
+
+.form-control {
+  width: 100%;
+  margin: 8px 0 8px 0;
+}
+
+.form-control > label {
+  margin-right: 8px;
+}
+
+.priceInput {
+  width: 53%;
+}
+
+.descriptionInput {
+  width: 45%;
+}
+
+.categorySelector {
+  padding: 0 8px;
+  width: 40%;
+}
+
+.FormSubmit {
+  margin: 8px;
+}
+
+.ListContainer {
+  /* border: 2px solid black; */
+  margin: auto;
+  margin-top: 8px;
+  width: 90%;
+}
+td {
+  margin: 0 8px 0 8px;
+  border: 0.3px solid rebeccapurple;
+}
+
+td > button {
+  border: none;
+}

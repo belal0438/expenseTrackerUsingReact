@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NaveBar from "./NaveBar/naveBar";
 import Form from "./form/form";
+import ExpensesForm from "../Expenses/expensesForm";
 
 const Profiles = () => {
   const [showForm, setShoeForm] = useState(false);
@@ -25,6 +26,7 @@ const Profiles = () => {
         }
       />
       {showForm && <Form />}
+      {!showForm && <ExpensesForm />}
     </div>
   );
 };
