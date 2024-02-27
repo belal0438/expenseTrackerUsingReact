@@ -2,22 +2,22 @@ import React, { useRef, useEffect, useState } from "react";
 import "./expensesForm.css";
 import axios from "axios";
 
-const setTbaleData = (data) => {
-  return data.length > 0
-    ? data.map((expens, index) => (
-        <tr key={index}>
-          <td>{expens.price}$</td>
-          <td>{expens.decription}</td>
-          <td>{expens.category}</td>
-          <td>
-            <button>Edit</button>
-          </td>
-          <td>
-            <button>Delete</button>
-          </td>
-        </tr>
-      ))
-    : null;
+const getExpenses = async () => {
+  try {
+    const result = await axios.get(
+      "https://expensestracker-9e6f5-default-rtdb.firebaseio.com/Expenses.json"
+    );
+    // console.log("result", result.data);
+    const fetchData = [];
+    for (let key in result.data) {
+      // console.log("result.data", result.data[key]);
+      fetchData.push({ id: key, ...result.data[key] });
+    }
+    return fetchData;
+  } catch (error) {
+    console.log("errorWhileGettingExpense", error);
+    return null;
+  }
 };
 
 const ExpensesForm = () => {
@@ -25,6 +25,58 @@ const ExpensesForm = () => {
   const inputDescriptRef = useRef();
   const inputCategoryRef = useRef();
   const [expenses, setExpenses] = useState([]);
+
+  const setTbaleData = (data) => {
+    // console.log("data", data);
+    return data.length > 0
+      ? data.map((expens) => (
+          <tr key={Math.random()}>
+            <td>{expens.price}$</td>
+            <td>{expens.decription}</td>
+            <td>{expens.category}</td>
+            <td>
+              <button onClick={() => OnClickEdditHanlder(expens.id)}>
+                Eddit
+              </button>
+            </td>
+            <td>
+              <button onClick={() => OnClickDeletHanlder(expens.id)}>
+                Delete
+              </button>
+            </td>
+          </tr>
+        ))
+      : null;
+  };
+
+  async function OnClickEdditHanlder(id) {
+    const data = expenses.filter((ele) => ele.id === id);
+    // console.log("EdditData", data[0]);
+    inputPriceRef.current.value = data[0].price;
+    inputDescriptRef.current.value = data[0].decription;
+    inputCategoryRef.current.value = data[0].category;
+    await OnClickDeletHanlder(id);
+  }
+
+  async function OnClickDeletHanlder(id) {
+    // console.log("id", id);
+    try {
+      const result = await axios.delete(
+        `https://expensestracker-9e6f5-default-rtdb.firebaseio.com/Expenses/${id}.json`
+      );
+
+      // console.log(result);
+      if (result.status === 200) {
+        const resultUpdatedData = await getExpenses();
+        setExpenses(resultUpdatedData);
+      } else {
+        throw new Error("somthing went wrong while Deleting");
+      }
+    } catch (error) {
+      console.log("ErrorWhileDeletingExpenses", error);
+    }
+  }
+
   const formSubmitHanlder = async (eve) => {
     eve.preventDefault();
     const obj = {
@@ -52,23 +104,14 @@ const ExpensesForm = () => {
   };
 
   useEffect(() => {
-    const getExpenses = async () => {
-      try {
-        const result = await axios.get(
-          "https://expensestracker-9e6f5-default-rtdb.firebaseio.com/Expenses.json"
-        );
-        // console.log("result", result.data);
-        const fetchData = [];
-        for (let key in result.data) {
-          // console.log("result.data", result.data[key]);
-          fetchData.push(result.data[key]);
-        }
-        setExpenses(fetchData);
-      } catch (error) {
-        console.log("errorWhileGettingExpense", error);
+    const fecthData = async () => {
+      const data = await getExpenses();
+      // console.log("data", data);
+      if (data) {
+        setExpenses(data);
       }
     };
-    getExpenses();
+    fecthData();
   }, []);
 
   return (
@@ -121,20 +164,7 @@ const ExpensesForm = () => {
                 <th>Category</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>100$</td>
-                <td>these are for our personal purpose</td>
-                <td>Salary</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-                <td>
-                  <button>Delete</button>
-                </td>
-              </tr>
-              {setTbaleData(expenses)}
-            </tbody>
+            <tbody>{setTbaleData(expenses)}</tbody>
           </table>
         </ul>
       </div>
