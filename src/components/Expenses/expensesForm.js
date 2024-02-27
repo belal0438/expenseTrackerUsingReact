@@ -1,12 +1,31 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import "./expensesForm.css";
+import axios from "axios";
+
+const setTbaleData = (data) => {
+  return data.length > 0
+    ? data.map((expens, index) => (
+        <tr key={index}>
+          <td>{expens.price}$</td>
+          <td>{expens.decription}</td>
+          <td>{expens.category}</td>
+          <td>
+            <button>Edit</button>
+          </td>
+          <td>
+            <button>Delete</button>
+          </td>
+        </tr>
+      ))
+    : null;
+};
 
 const ExpensesForm = () => {
   const inputPriceRef = useRef();
   const inputDescriptRef = useRef();
   const inputCategoryRef = useRef();
-
-  const formSubmitHanlder = (eve) => {
+  const [expenses, setExpenses] = useState([]);
+  const formSubmitHanlder = async (eve) => {
     eve.preventDefault();
     const obj = {
       price: inputPriceRef.current.value,
@@ -14,8 +33,43 @@ const ExpensesForm = () => {
       category: inputCategoryRef.current.value,
     };
 
-    console.log("obj", obj);
+    try {
+      // console.log("obj", obj);
+      const result = await axios.post(
+        "https://expensestracker-9e6f5-default-rtdb.firebaseio.com/Expenses.json",
+        obj
+      );
+      // console.log("adde expenses", result);
+      if (result.status === 200) {
+        setExpenses((prevExpenses) => [...prevExpenses, obj]);
+      } else {
+        throw new Error("Somthing went wrong while adding expeses");
+      }
+    } catch (error) {
+      alert(error.message);
+      // console.log("errorDuringAddExpenses", error);
+    }
   };
+
+  useEffect(() => {
+    const getExpenses = async () => {
+      try {
+        const result = await axios.get(
+          "https://expensestracker-9e6f5-default-rtdb.firebaseio.com/Expenses.json"
+        );
+        // console.log("result", result.data);
+        const fetchData = [];
+        for (let key in result.data) {
+          // console.log("result.data", result.data[key]);
+          fetchData.push(result.data[key]);
+        }
+        setExpenses(fetchData);
+      } catch (error) {
+        console.log("errorWhileGettingExpense", error);
+      }
+    };
+    getExpenses();
+  }, []);
 
   return (
     <div className="expenseContainer">
@@ -28,6 +82,7 @@ const ExpensesForm = () => {
             placeholder="enter price"
             className="priceInput"
             ref={inputPriceRef}
+            required
           />
         </div>
         <div className="form-control">
@@ -37,10 +92,11 @@ const ExpensesForm = () => {
             placeholder="description"
             className="descriptionInput"
             ref={inputDescriptRef}
+            required
           />
         </div>
         <div className="form-control">
-          <label for="category">Choose category:</label>
+          <label htmlFor="category">Choose category:</label>
           <select
             name="category"
             id="category"
@@ -77,6 +133,7 @@ const ExpensesForm = () => {
                   <button>Delete</button>
                 </td>
               </tr>
+              {setTbaleData(expenses)}
             </tbody>
           </table>
         </ul>
