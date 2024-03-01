@@ -1,12 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./naveBar.css";
-import AuthContext from "../../../store/auth-context";
+import { useDispatch, useSelector } from "react-redux";
+import { authAction } from "../../../store/authReducer";
 
 const NaveBar = (props) => {
-  const AuthCtxt = useContext(AuthContext);
-
+  const dispatch = useDispatch();
+  const showPremiumBtn = useSelector((state) => state.expense.showPremiunBtn);
+  // console.log("shobtn", showPremiumBtn);
   const logoutOnClickHanlder = () => {
-    AuthCtxt.logout();
+    dispatch(authAction.logout());
   };
 
   return (
@@ -16,6 +18,9 @@ const NaveBar = (props) => {
           <span>{props.heading}</span>
         </li>
         <li>
+          {showPremiumBtn && <button className="primiumBtn">ByPremium</button>}
+        </li>
+        <li>
           <div className="leftDiv">
             {props.profileDesc}
             <button className="ComplNow" onClick={props.OnClickCompletNow}>
@@ -23,6 +28,7 @@ const NaveBar = (props) => {
             </button>
           </div>
         </li>
+
         <li>
           <button className="LogOut" onClick={logoutOnClickHanlder}>
             Logout

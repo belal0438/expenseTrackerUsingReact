@@ -1,7 +1,8 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import "./usersForm.css";
-import AuthContext from "../../store/auth-context";
+import { useDispatch } from "react-redux";
+import { authAction } from "../../store/authReducer";
 
 const HandlingUrlData = async (url, data) => {
   try {
@@ -23,7 +24,7 @@ const UsersForm = (props) => {
   const inputEmailRef = useRef();
   const inputPasswordRef = useRef();
   const inputConfirmPassRef = useRef();
-  const AuthCtxt = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   const switchAccountSignUpLogin = () => {
     setIsLogin((prevState) => !prevState);
@@ -47,8 +48,7 @@ const UsersForm = (props) => {
       });
       if (result) {
         alert("User logged successfuly");
-        // console.log("data", result.data.idToken);
-        AuthCtxt.loggin(result.data.idToken);
+        dispatch(authAction.loggin(result.data.idToken));
       }
     } else {
       url =

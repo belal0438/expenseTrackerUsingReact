@@ -1,7 +1,7 @@
-import React, { useRef, useContext, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import "./form.css";
-import AuthContext from "../../../store/auth-context";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const HandleUserDetailFormAPi = async (data) => {
   try {
@@ -13,7 +13,7 @@ const HandleUserDetailFormAPi = async (data) => {
     console.log("resultUserDetail", result);
   } catch (error) {
     alert(error.message);
-    console.log("errorOnUserDetail", error);
+    // console.log("errorOnUserDetail", error);
   }
 };
 
@@ -38,8 +38,7 @@ const sendVerifyEmailHandler = async (idToken) => {
 const Form = () => {
   const inputNameRef = useRef();
   const inputImageUrlRef = useRef();
-  const AuthCtxt = useContext(AuthContext);
-  const idToken = AuthCtxt.token;
+  const idToken = useSelector((state) => state.auth.token);
   const userDetailFormSubmitHandler = async (eve) => {
     eve.preventDefault();
     const obj = {
@@ -57,7 +56,7 @@ const Form = () => {
         "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBBwPK-3FcqO64_z8KE_TOY-luwAxohwB4",
         { idToken }
       );
-      //   console.log("response", response.data.users);
+      console.log("response!!!!!!!", response.data.users);
       inputNameRef.current.value = `${response.data.users[0].displayName}`;
       inputImageUrlRef.current.value = `${response.data.users[0].photoUrl}`;
     };

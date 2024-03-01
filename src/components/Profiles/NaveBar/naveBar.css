@@ -43,6 +43,15 @@ button:hover {
   background-color: rgb(163, 48, 48);
 }
 
+.primiumBtn {
+  margin: 8px;
+  padding: 3px;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 3px;
+  background-color: rgb(159, 237, 147);
+}
+
 @media screen and (max-width: 767px) {
   /* Styles for small screens */
   header {

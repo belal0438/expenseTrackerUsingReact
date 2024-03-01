@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./expensesForm.css";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { expensePriceAction } from "../../store/expenseReducer";
 
 const getExpenses = async () => {
   try {
@@ -25,6 +27,8 @@ const ExpensesForm = () => {
   const inputDescriptRef = useRef();
   const inputCategoryRef = useRef();
   const [expenses, setExpenses] = useState([]);
+  const dispatch = useDispatch();
+  expenses.map((ele) => dispatch(expensePriceAction.addPrice(ele.price)));
 
   const setTbaleData = (data) => {
     // console.log("data", data);
@@ -112,7 +116,7 @@ const ExpensesForm = () => {
       }
     };
     fecthData();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="expenseContainer">

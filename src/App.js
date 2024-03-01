@@ -1,16 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./App.css";
 import Users from "./components/Users/users";
 import Profiles from "./components/Profiles/profiles";
-import AuthContext from "./store/auth-context";
+import { useSelector } from "react-redux";
 
 function App() {
-  const authCtxt = useContext(AuthContext);
-  // console.log(authCtxt);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   return (
     <div className="App">
-      {!authCtxt.isLoggedIn && <Users />}
-      {authCtxt.isLoggedIn && <Profiles />}
+      {!isLoggedIn && <Users />}
+      {isLoggedIn && <Profiles />}
     </div>
   );
 }
