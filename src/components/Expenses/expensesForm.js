@@ -3,6 +3,7 @@ import "./expensesForm.css";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { expensePriceAction } from "../../store/expenseReducer";
+import DownloadExpenseBtn from "./downloadExpenseBtn";
 
 const getExpenses = async () => {
   try {
@@ -22,7 +23,7 @@ const getExpenses = async () => {
   }
 };
 
-const ExpensesForm = () => {
+const ExpensesForm = (props) => {
   const inputPriceRef = useRef();
   const inputDescriptRef = useRef();
   const inputCategoryRef = useRef();
@@ -171,6 +172,9 @@ const ExpensesForm = () => {
             <tbody>{setTbaleData(expenses)}</tbody>
           </table>
         </ul>
+        {props.showDownloadBtn && (
+          <DownloadExpenseBtn className="downloadExpens" expenses={expenses} />
+        )}
       </div>
     </div>
   );

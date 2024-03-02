@@ -37,6 +37,13 @@
   margin: 8px;
 }
 
+.downloadExpens {
+  margin: 6px 0;
+  color: white;
+  background-color: green;
+  border-radius: 2px;
+}
+
 .ListContainer {
   /* border: 2px solid black; */
   margin: auto;
@@ -44,10 +51,31 @@
   width: 90%;
 }
 td {
-  margin: 0 8px 0 8px;
   border: 0.3px solid rebeccapurple;
 }
 
 td > button {
   border: none;
+}
+
+@media screen and (max-width: 767px) {
+  /* Styles for small screens */
+  .expenseContainer {
+    margin: auto;
+    padding-top: 1rem;
+    /* border: 2px solid red; */
+    width: 60%;
+  }
+  .ListContainer {
+    width: fit-content;
+    font-size: 10px;
+  }
+
+  td {
+    border: 0.3px solid rebeccapurple;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  /* Styles for medium screens */
 }

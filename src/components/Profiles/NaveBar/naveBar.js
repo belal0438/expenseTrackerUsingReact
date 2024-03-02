@@ -11,6 +11,10 @@ const NaveBar = (props) => {
     dispatch(authAction.logout());
   };
 
+  const activePremiumHandler = () => {
+    props.showDownloadBtn();
+  };
+
   return (
     <header>
       <ul>
@@ -18,7 +22,11 @@ const NaveBar = (props) => {
           <span>{props.heading}</span>
         </li>
         <li>
-          {showPremiumBtn && <button className="primiumBtn">ByPremium</button>}
+          {showPremiumBtn && (
+            <button className="primiumBtn" onClick={activePremiumHandler}>
+              Active Premium
+            </button>
+          )}
         </li>
         <li>
           <div className="leftDiv">
