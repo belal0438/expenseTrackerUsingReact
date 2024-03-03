@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import "./form.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const HandleUserDetailFormAPi = async (data) => {
   try {
@@ -17,28 +18,12 @@ const HandleUserDetailFormAPi = async (data) => {
   }
 };
 
-const sendVerifyEmailHandler = async (idToken) => {
-  try {
-    const result = await axios.post(
-      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBBwPK-3FcqO64_z8KE_TOY-luwAxohwB4",
-      { requestType: "VERIFY_EMAIL", idToken }
-    );
-    // console.log("sendEmailresult", result);
-    if (result.status === 200) {
-      alert("Send Verification Email");
-    } else {
-      throw new Error("Somthing went wrong while sending email");
-    }
-  } catch (error) {
-    alert(error.message);
-    console.log("errorWhileSendingVerifyEmail", error);
-  }
-};
-
 const Form = () => {
   const inputNameRef = useRef();
   const inputImageUrlRef = useRef();
   const idToken = useSelector((state) => state.auth.token);
+  const navigation = useNavigate();
+
   const userDetailFormSubmitHandler = async (eve) => {
     eve.preventDefault();
     const obj = {
@@ -50,22 +35,37 @@ const Form = () => {
     await HandleUserDetailFormAPi({ idToken, ...obj });
   };
 
+  const veryifyEmailHanlder = async (idToken) => {
+    try {
+      const result = await axios.post(
+        "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBBwPK-3FcqO64_z8KE_TOY-luwAxohwB4",
+        { requestType: "VERIFY_EMAIL", idToken }
+      );
+      // console.log("sendEmailresult", result);
+      if (result.status === 200) {
+        alert("Send Verification Email");
+        navigation("/expenses");
+      } else {
+        throw new Error("Somthing went wrong while sending email");
+      }
+    } catch (error) {
+      alert(error.message);
+      console.log("errorWhileSendingVerifyEmail", error);
+    }
+  };
+
   useEffect(() => {
     const fecthUserData = async () => {
       const response = await axios.post(
         "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBBwPK-3FcqO64_z8KE_TOY-luwAxohwB4",
         { idToken }
       );
-      console.log("response!!!!!!!", response.data.users);
+      // console.log("response!!!!!!!", response.data.users);
       inputNameRef.current.value = `${response.data.users[0].displayName}`;
       inputImageUrlRef.current.value = `${response.data.users[0].photoUrl}`;
     };
     fecthUserData();
   }, [idToken]);
-
-  const veryifyEmailHanlder = () => {
-    sendVerifyEmailHandler(idToken);
-  };
 
   return (
     <>

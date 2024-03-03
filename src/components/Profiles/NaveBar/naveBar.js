@@ -2,13 +2,16 @@ import React from "react";
 import "./naveBar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { authAction } from "../../../store/authReducer";
+import { useNavigate } from "react-router-dom";
 
 const NaveBar = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const showPremiumBtn = useSelector((state) => state.expense.showPremiunBtn);
   // console.log("shobtn", showPremiumBtn);
   const logoutOnClickHanlder = () => {
     dispatch(authAction.logout());
+    navigate("/expenses");
   };
 
   const activePremiumHandler = () => {

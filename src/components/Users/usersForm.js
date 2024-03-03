@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+// import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./usersForm.css";
 import { useDispatch } from "react-redux";
@@ -25,6 +26,7 @@ const UsersForm = (props) => {
   const inputPasswordRef = useRef();
   const inputConfirmPassRef = useRef();
   const dispatch = useDispatch();
+  // const histroy = useHistory();
 
   const switchAccountSignUpLogin = () => {
     setIsLogin((prevState) => !prevState);
@@ -49,6 +51,7 @@ const UsersForm = (props) => {
       if (result) {
         alert("User logged successfuly");
         dispatch(authAction.loggin(result.data.idToken));
+        // histroy.replace("/");
       }
     } else {
       url =
